@@ -19,7 +19,12 @@ Install FNV-1a Hash with npm
 ## Usage/Examples
 
 ```javascript
+
+// ESM import
 import fnv1a from '@ronnakamoto/fnv-1a'
+
+// or CommonJS import
+const fnv1a =  require('@ronnakamoto/fnv-1a').default;
 
 //takes defaults { size: 32, outType: 'bigint' }
 const hash = fnv1a("input"); 
@@ -29,6 +34,8 @@ const hash = fnv1a("input", { size: 512 });
 
 // takes { size: 32, outType: 'bin' }
 const hash = fnv1a("input", { outType: 'bin' }); 
+
+// CommonJs im
 
 ```
 
