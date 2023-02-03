@@ -59,7 +59,7 @@ export default function fnv1a(data: Input, { size = 32, outType = 'bigint' }: Op
 
     for (let i = 0, len = sData.length; i < len;i++) {
         ;
-        let charCode: number = sData.charCodeAt(i);
+        const charCode: number = sData.charCodeAt(i);
         fnv1aOffset ^= BigInt(charCode);
         fnv1aOffset = BigInt.asUintN(size, fnv1aOffset * fnv1aPrime);
     }

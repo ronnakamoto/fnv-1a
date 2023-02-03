@@ -35,7 +35,14 @@ const hash = fnv1a("input", { size: 512 });
 // takes { size: 32, outType: 'bin' }
 const hash = fnv1a("input", { outType: 'bin' }); 
 
-// CommonJs im
+// use those smiley faces. unicode support
+const hash = fnv1a("😁😂😃"); 
+
+// and of course fancy text as well
+const hash = fnv1a("ℜ𝔬𝔫 𝔑𝔞𝔨𝔞𝔪𝔬𝔱𝔬"); 
+
+// and supports any language
+const hash = fnv1a("ロン 中本"); 
 
 ```
 
