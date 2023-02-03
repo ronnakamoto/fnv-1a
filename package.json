@@ -1,6 +1,6 @@
 {
   "name": "@ronnakamoto/fnv-1a",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is a TypeScript implementation of FNV-1a Hash. Fowler–Noll–Vo (or FNV) is a non-cryptographic hash function which is fast and simple in design.",
   "types": "./lib/cjs/types/index.d.ts",
   "main": "./lib/cjs/index.js",
