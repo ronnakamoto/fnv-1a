@@ -16,7 +16,13 @@
     "type": "git",
     "url": "git@github.com-ronnakamoto:ronnakamoto/fnv-1a.git"
   },
-  "keywords": [],
+  "keywords": [
+    "hash",
+    "fnv",
+    "fnv1a",
+    "algorithm",
+    "fast"
+  ],
   "author": "Ron Nakamoto",
   "license": "MIT",
   "files": [
