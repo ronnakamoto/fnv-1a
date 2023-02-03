@@ -1,10 +1,13 @@
 import 'mocha';
 import { assert } from "chai";
 import fnv1a from "../src";
+import { Options } from '../src/types';
 
 const DATA = {
     'STRING_SHORT': {
         text: 'Ron Nakamoto',
+        hash32_hex: '0x3da014bc',
+        hash32_bin: '111101101000000001010010111100',
         hash_32: BigInt('0x3da014bc'),
         hash_64: BigInt('0xf5d0421cb1e2cd3c'),
         hash_128: BigInt('0x1bdf16862632143071975a9c3c7ac74c'),
@@ -33,61 +36,80 @@ const DATA = {
 
 
 describe('FNV-1A', () => {
-    it('Should throw if an invalid `Option.size` is given', () => {
+    it('Should throw if an invalid `Option.size` is give', () => {
         assert.throws(() => fnv1a(DATA.STRING_SHORT.text, { size: 35 as never }));
     });
 
-    it('Should not throw if a valid `Option.size` is given', () => {
+    it('Should not throw if a valid `Option.size` is give', () => {
         assert.doesNotThrow(() => fnv1a(DATA.STRING_SHORT.text, { size: 32 }));
     });
 
-    it('Should given correct hash when `Options.size` is 32 and data is short', () => {
+    it('Should give correct hash when `Options.size` is 32 and data is short', () => {
         const result = fnv1a(DATA.STRING_SHORT.text, { size: 32 });
         assert.equal(result, DATA.STRING_SHORT.hash_32);
     });
 
-    it('Should given correct hash when `Options.size` is 32 and data is long', () => {
+    it('Should give correct hash when `Options.size` is 32 and data is long', () => {
         const result = fnv1a(DATA.STRING_LONG.text, { size: 32 });
         assert.equal(result, DATA.STRING_LONG.hash_32);
     });
 
-    it('Should given correct hash when `Options.size` is 64 and data is long', () => {
+    it('Should give correct hash when `Options.size` is 64 and data is long', () => {
         const result = fnv1a(DATA.STRING_LONG.text, { size: 64 });
         assert.equal(result, DATA.STRING_LONG.hash_64);
     });
 
-    it('Should given correct hash when `Options.size` is 64', () => {
+    it('Should give correct hash when `Options.size` is 64', () => {
         const result = fnv1a(DATA.STRING_SHORT.text, { size: 64 });
         assert.equal(result, DATA.STRING_SHORT.hash_64);
     });
 
-    it('Should given correct hash when `Options.size` is 128', () => {
+    it('Should give correct hash when `Options.size` is 128', () => {
         const result = fnv1a(DATA.STRING_SHORT.text, { size: 128 });
         assert.equal(result, DATA.STRING_SHORT.hash_128);
     });
 
-    it('Should given correct hash when `Options.size` is 256', () => {
+    it('Should give correct hash when `Options.size` is 256', () => {
         const result = fnv1a(DATA.STRING_SHORT.text, { size: 256 });
         assert.equal(result, DATA.STRING_SHORT.hash_256);
     });
 
-    it('Should given correct hash when `Options.size` is 512', () => {
+    it('Should give correct hash when `Options.size` is 512', () => {
         const result = fnv1a(DATA.STRING_SHORT.text, { size: 512 });
         assert.equal(result, DATA.STRING_SHORT.hash_512);
     });
 
-    it('Should given correct hash when `Options.size` is 1024', () => {
+    it('Should give correct hash when `Options.size` is 1024', () => {
         const result = fnv1a(DATA.STRING_SHORT.text, { size: 1024 });
         assert.equal(result, DATA.STRING_SHORT.hash_1024);
     });
 
-    it('Should given correct hash when data is unicode text', () => {
+    it('Should give correct hash when data is unicode text', () => {
         const result = fnv1a(DATA.UNICODE_TEXT.text, { size: 32 });
         assert.equal(result, DATA.UNICODE_TEXT.hash_32);
     });
 
-    it('Should given correct hash when data is emoji', () => {
+    it('Should give correct hash when data is emoji', () => {
         const result = fnv1a(DATA.UNICODE_EMOJI.text, { size: 32 });
         assert.equal(result, DATA.UNICODE_EMOJI.hash_32);
+    });
+
+    it('Should give output in hex form when `Option.outType` is `hex`', () => {
+        const result = fnv1a(DATA.STRING_SHORT.text, { size: 32, outType: 'hex' });
+        assert.equal(result, DATA.STRING_SHORT.hash32_hex);
+    });
+
+    it('Should give output in binary form when `Option.outType` is `bin`', () => {
+        const result = fnv1a(DATA.STRING_SHORT.text, { size: 32, outType: 'bin' });
+        assert.equal(result, DATA.STRING_SHORT.hash32_bin);
+    });
+
+    it('Should be able to use the defaults when options are not provided', () => {
+        const result = fnv1a(DATA.STRING_SHORT.text);
+        assert.equal(result, DATA.STRING_SHORT.hash_32);
+    });
+
+    it('Should throw when unknown `Option.outType` is provided', () => {
+        assert.throws(() => fnv1a(DATA.STRING_SHORT.text, { size: 32, outType: 'satoshi' } as unknown as Options), TypeError);
     });
 });

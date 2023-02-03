@@ -1,4 +1,4 @@
-import { Input, Options } from "./types";
+import { Input, Options, Output } from "./types";
 
 /**
  * FNV_1a Parameters [prime, offset]
@@ -15,8 +15,30 @@ const FNV_1A_PARAMS: Map<number, bigint[]> = new Map([
 const isString = (value: unknown): boolean => typeof value === 'string' || value instanceof String;
 const isObject = (value: unknown): boolean => value instanceof Object && value.constructor === Object;
 const isUnicode = (value: string): boolean => /[^\u0000-\u00ff]/.test(value);
+const formatOutType = (value: bigint, type: string): string => {
+    let output: string;
+    switch (type) {
+        case 'hex': {
+            output = '0x' + value.toString(16);
+            break;
+        }
+        case 'bin': {
+            output = value.toString(2);
+            break;
+        }
+        default:
+            throw new TypeError('Unexpected type specified');
+    }
+    return output;
+}
 
-export default function fnv1a(data: Input, { size, outType }: Options) {
+/**
+ * 
+ * @param data Input plain text
+ * @param {{size: number, outType: Output }} options options for fnv1a hashing
+ * @returns 
+ */
+export default function fnv1a(data: Input, { size = 32, outType = 'bigint' }: Options = {}): Output {
     if (!FNV_1A_PARAMS.has(size)) {
         throw new Error('Size should be 32, 64, 128, 512 or 1024');
     }
@@ -42,5 +64,5 @@ export default function fnv1a(data: Input, { size, outType }: Options) {
         fnv1aOffset = BigInt.asUintN(size, fnv1aOffset * fnv1aPrime);
     }
 
-    return fnv1aOffset;
+    return 'bigint' === outType ? fnv1aOffset : formatOutType(fnv1aOffset, outType);
 }

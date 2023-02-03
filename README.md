@@ -21,22 +21,30 @@ Install FNV-1a Hash with npm
 ```javascript
 import fnv1a from '@ronnakamoto/fnv-1a'
 
-const hash = fnv1a("input", { size: 32 });
+//takes defaults { size: 32, outType: 'bigint' }
+const hash = fnv1a("input"); 
+
+// takes { size: 512, outType: 'bigint' }
+const hash = fnv1a("input", { size: 512 }); 
+
+// takes { size: 32, outType: 'bin' }
+const hash = fnv1a("input", { outType: 'bin' }); 
+
 ```
 
 
 ## Documentation
 
 ```typescript
-  fnv1a(input: Input, options: Options): bigint
+  fnv1a(input: Input, options: Options): Output
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `input` | `Input` | **Required**. Input data(`string`, `object`)|
-| `options` | `Options` | **Required**. Options(`{ size: 32\|64\|128\|256\|512\|1024}`) |
+| `options` | `Options` | **Required**. Options(`{ size: 32\|64\|128\|256\|512\|1024, outType: 'bigint'\|'hex'\|'bin'}`) |
 
-Takes the input data and returns `BigInt`
+Takes the input data and returns `BigInt` or `string`(hex, binary)
 
 
 ## Build and Run Locally
